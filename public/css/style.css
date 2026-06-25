@@ -1,0 +1,461 @@
+/* =============================================
+   AI PLATFORM - Özel Stiller
+   ============================================= */
+
+/* Genel Stiller */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #334155 transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+/* Sidebar */
+.sidebar {
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+/* Chat Messages */
+.message {
+    max-width: 85%;
+    animation: messageSlideIn 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message.user {
+    align-self: flex-end;
+}
+
+.message.user .message-content {
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    border-radius: 18px 18px 4px 18px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.message.assistant .message-content {
+    background: #1e293b;
+    border-radius: 18px 18px 18px 4px;
+    color: #e2e8f0;
+    border: 1px solid #334155;
+}
+
+/* Markdown içeriği stilleri */
+.message-content h1, 
+.message-content h2, 
+.message-content h3 {
+    color: #f1f5f9;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.message-content h1 { font-size: 1.3rem; }
+.message-content h2 { font-size: 1.15rem; }
+.message-content h3 { font-size: 1.05rem; }
+
+.message-content p {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+}
+
+.message-content ul, 
+.message-content ol {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.message-content li {
+    margin-bottom: 0.25rem;
+}
+
+.message-content a {
+    color: #818cf8;
+    text-decoration: underline;
+}
+
+.message-content a:hover {
+    color: #a5b4fc;
+}
+
+.message-content blockquote {
+    border-left: 3px solid #4f46e5;
+    padding-left: 1rem;
+    color: #94a3b8;
+    margin: 0.75rem 0;
+    font-style: italic;
+}
+
+.message-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.75rem 0;
+    font-size: 0.875rem;
+}
+
+.message-content th,
+.message-content td {
+    border: 1px solid #334155;
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+}
+
+.message-content th {
+    background: #1e293b;
+    color: #f1f5f9;
+    font-weight: 600;
+}
+
+.message-content td {
+    background: #0f172a;
+    color: #cbd5e1;
+}
+
+.message-content tr:nth-child(even) td {
+    background: #1a2332;
+}
+
+.message-content hr {
+    border: none;
+    border-top: 1px solid #334155;
+    margin: 1rem 0;
+}
+
+/* Kod Blokları - Modern Code Wrapper (Mobil Uyumlu + Sabit Kopyala) */
+.code-block-wrapper {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    margin: 0.75rem 0;
+    background: #0f172a !important;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.code-block-wrapper .code-header {
+    position: sticky !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 36px;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.75rem;
+    z-index: 5;
+    box-sizing: border-box;
+}
+
+.code-block-wrapper .code-header .code-lang-label {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.code-block-wrapper .copy-code-btn {
+    position: absolute !important;
+    right: 10px !important;
+    top: 5px !important;
+    z-index: 10 !important;
+    background: #334155;
+    color: #94a3b8;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    opacity: 0.85;
+    white-space: nowrap;
+    pointer-events: auto;
+}
+
+.code-block-wrapper .copy-code-btn:hover {
+    background: #475569;
+    color: #e2e8f0;
+    opacity: 1;
+}
+
+.code-block-wrapper .copy-code-btn.text-green-400 {
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.2);
+}
+
+.code-block-wrapper .copy-code-btn.text-red-400 {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.2);
+}
+
+.code-block-wrapper pre {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0.75rem 1rem !important;
+    overflow-x: auto !important;
+    overflow-y: auto;
+    max-height: 350px;
+    /* SAĞA UZAMAYI ENGELLE: kodlar mobilde alt satıra insin */
+    white-space: pre-wrap !important;
+    word-break: break-all !important;
+    overflow-wrap: break-word !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.code-block-wrapper pre code {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    /* SAĞA UZAMAYI ENGELLE: kodlar ekran sınırına gelince alt satıra geçsin */
+    white-space: pre-wrap !important;
+    word-break: break-all !important;
+    overflow-wrap: break-word !important;
+    padding: 0 !important;
+    line-height: 1.6;
+    tab-size: 4;
+    font-size: 0.82em !important;
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    color: #e2e8f0;
+}
+
+.message-content code {
+    font-family: 'Fira Code', 'JetBrains Mono', monospace;
+    font-size: 0.85em !important;
+}
+
+.message-content p code,
+.message-content li code {
+    background: #1e293b;
+    color: #a5b4fc;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+}
+
+/* Inline Görsel */
+.message-content img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 0.5rem 0;
+}
+
+/* Focus Mode Buttons */
+.mode-btn {
+    background: rgba(51, 65, 85, 0.5);
+    color: #94a3b8;
+    border: 1px solid transparent;
+}
+
+.mode-btn:hover {
+    background: rgba(51, 65, 85, 0.8);
+    color: #e2e8f0;
+    border-color: #475569;
+}
+
+.mode-btn.active {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(99, 102, 241, 0.1));
+    color: #818cf8;
+    border-color: #4f46e5;
+    box-shadow: 0 0 20px rgba(79, 70, 229, 0.1);
+}
+
+/* Mode özel renkler */
+.mode-btn.mode-kod.active {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(74, 222, 128, 0.1));
+    color: #4ade80;
+    border-color: #22c55e;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.1);
+}
+
+.mode-btn.mode-arastirma.active {
+    background: linear-gradient(135deg, rgba(234, 179, 8, 0.2), rgba(250, 204, 21, 0.1));
+    color: #facc15;
+    border-color: #eab308;
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.1);
+}
+
+.mode-btn.mode-gorsel.active {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(192, 132, 252, 0.1));
+    color: #c084fc;
+    border-color: #a855f7;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
+}
+
+.mode-btn.mode-fotograf.active {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(244, 114, 182, 0.1));
+    color: #f472b6;
+    border-color: #ec4899;
+    box-shadow: 0 0 20px rgba(236, 72, 153, 0.1);
+}
+
+/* Textarea auto-resize */
+textarea {
+    field-sizing: content;
+}
+
+/* Loading dots */
+.loading-dots::after {
+    content: '';
+    animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+    0% { content: ''; }
+    25% { content: '.'; }
+    50% { content: '..'; }
+    75% { content: '...'; }
+    100% { content: ''; }
+}
+
+/* Sohbet geçmişi öğeleri */
+.chat-history-item {
+    transition: all 0.2s;
+}
+
+.chat-history-item:hover {
+    background: rgba(51, 65, 85, 0.5);
+}
+
+.chat-history-item.active {
+    background: rgba(79, 70, 229, 0.15);
+    border-left: 2px solid #4f46e5;
+}
+
+/* Scrollbar hide class */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .message {
+        max-width: 95%;
+    }
+    
+    .sidebar {
+        width: 100% !important;
+    }
+    
+    #focusModes {
+        gap: 0.5rem;
+    }
+    
+    .mode-btn {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.6rem;
+    }
+}
+
+/* Sohbet kartı hover efekti */
+.suggestion-card {
+    transition: all 0.3s;
+}
+
+.suggestion-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Typing indicator */
+.typing-indicator span {
+    animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typingBounce {
+    0%, 80%, 100% { 
+        transform: scale(0);
+    }
+    40% { 
+        transform: scale(1);
+    }
+}
+
+/* Toast bildirimleri */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 100;
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Markdown render alanı */
+.markdown-body {
+    line-height: 1.7;
+}
+
+/* Görsel önizleme */
+.image-preview {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+/* Sidebar Chat Item zaman damgası */
+.chat-time {
+    font-size: 10px;
+    color: #64748b;
+}
