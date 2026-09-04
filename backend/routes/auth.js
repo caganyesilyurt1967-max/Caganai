@@ -1,59 +1,54 @@
 // =============================================
-// Oturum ve Kullanıcı Durumu Route'ları (Google OAuth Kaldırıldı)
+// Auth Modülü (Google Giriş Zorunluluğu Kaldırıldı)
 // =============================================
 
-const express = require('express');
-const router = express.Router();
+const Auth = {
+  user: {
+    id: 'anon-user',
+    displayName: 'Kullanıcı',
+    email: 'aktif@oturum'
+  },
+  isAuthenticated: true,
 
-// ---------------------------------------------
-// Kullanıcı Çıkış Yapma Route'u
-// ---------------------------------------------
-router.get('/logout', (req, res) => {
-  if (req.session) {
-    req.session.destroy((err) => {
-      if (err) {
-        console.error('Oturum yok edilirken hata oluştu:', err);
-      }
-      res.clearCookie('connect.sid'); // Oturum çerezini temizle
-      res.redirect('/');
+  async init() {
+    // Sayfa açılır açılmaz sohbet alanını görünür yap, giriş engellerini kaldır
+    this.showChatUI();
+  },
+
+  showChatUI() {
+    const loginScreen = document.getElementById('loginScreen');
+    const chatArea = document.getElementById('chatArea');
+    const inputArea = document.getElementById('inputArea');
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const loginPrompt = document.getElementById('loginPrompt');
+    const userInfo = document.getElementById('userInfo');
+
+    // Giriş ekranlarını gizle
+    if (loginScreen) loginScreen.classList.add('hidden');
+    if (loginPrompt) loginPrompt.classList.add('hidden');
+
+    // Sohbet ve mesaj alanlarını aç
+    if (chatArea) chatArea.classList.remove('hidden');
+    if (inputArea) inputArea.classList.remove('hidden');
+    if (welcomeScreen) welcomeScreen.classList.remove('hidden');
+    if (userInfo) userInfo.classList.remove('hidden');
+
+    // Sitede "Mesaj göndermek için Google ile giriş yapın" yazan yerleri ve Google butonlarını gizle
+    document.querySelectorAll('.google-login-btn, #loginBtn, #loginBtnCenter').forEach(el => {
+      if (el) el.style.display = 'none';
     });
-  } else {
-    res.redirect('/');
-  }
-});
 
-// ---------------------------------------------
-// Kullanıcı Durumu ve Profil Fonksiyonu
-// ---------------------------------------------
-const handleAuthStatus = (req, res) => {
-  try {
-    // Eğer oturum açıksa kullanıcı bilgilerini dön, değilse varsayılan anonim yapıyı dön
-    if (req.isAuthenticated && req.isAuthenticated() && req.user) {
-      res.json({
-        authenticated: true,
-        user: {
-          id: req.user.id || req.user._id || 'user',
-          displayName: req.user.displayName || 'Kullanıcı',
-          email: req.user.email || '',
-          photo: req.user.photo || ''
-        }
-      });
-    } else {
-      res.json({
-        authenticated: false,
-        user: null
-      });
-    }
-  } catch (error) {
-    console.error('Kullanıcı bilgisi kontrol hatası:', error);
-    res.json({ authenticated: false, user: null });
+    // Varsa "Mesaj göndermek için..." uyarı yazılarını kaldır
+    const bodyText = document.body.innerHTML;
+    document.querySelectorAll('p, div, span').forEach(el => {
+      if (el.children.length === 0 && el.textContent.includes('Mesaj göndermek için Google ile giriş yapın')) {
+        el.remove();
+      }
+    });
   }
 };
 
-// ---------------------------------------------
-// Frontend API Endpoint'leri
-// ---------------------------------------------
-router.get('/status', handleAuthStatus);
-router.get('/user', handleAuthStatus);
-
-module.exports = router;
+// Sayfa yüklendiğinde auth kontrolünü çalıştır
+document.addEventListener('DOMContentLoaded', () => {
+  Auth.init();
+});
