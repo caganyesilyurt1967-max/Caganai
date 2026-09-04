@@ -1,73 +1,58 @@
 // =============================================
-// Google OAuth Kimlik Doğrulama Route'ları
+// Oturum ve Kullanıcı Durumu Route'ları (Google OAuth Kaldırıldı)
 // =============================================
 
 const express = require('express');
-const passport = require('passport');
 const router = express.Router();
 
-// Google OAuth giriş sayfasına yönlendir
-router.get('/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email'],
-    prompt: 'select_account'
-  })
-);
-
-// Google OAuth callback (Yarış durumu hatası tamamen çözüldü)
-router.get('/google/callback',
-  passport.authenticate('google', { failureRedirect: '/?login=failed' }),
-  (req, res) => {
-    // Oturum veritabanına/hafızaya tamamen yazılana kadar bekliyoruz
-    req.session.save((err) => {
+// ---------------------------------------------
+// Kullanıcı Çıkış Yapma Route'u
+// ---------------------------------------------
+router.get('/logout', (req, res) => {
+  if (req.session) {
+    req.session.destroy((err) => {
       if (err) {
-        console.error('Oturum kaydedilirken hata oluştu:', err);
-        return res.redirect('/?login=failed');
+        console.error('Oturum yok edilirken hata oluştu:', err);
       }
-      console.log('✅ Oturum başarıyla kaydedildi. Ana sayfaya güvenle yönlendiriliyor.');
+      res.clearCookie('connect.sid'); // Oturum çerezini temizle
       res.redirect('/');
     });
+  } else {
+    res.redirect('/');
   }
-);
-
-// Kullanıcı oturumunu kapat ve çerezleri temizle
-router.get('/logout', (req, res, next) => {
-  req.logout(function(err) {
-    if (err) { return next(err); }
-    
-    req.session.destroy((destroyErr) => {
-      if (destroyErr) {
-        console.error('Oturum yok edilirken hata oluştu:', destroyErr);
-      }
-      res.clearCookie('connect.sid'); // Eski oturum çerezini tarayıcıdan kazı
-      res.redirect('/');
-    });
-  });
 });
 
-// Kullanıcı bilgilerini ve durumunu getiren ortak fonksiyon
+// ---------------------------------------------
+// Kullanıcı Durumu ve Profil Fonksiyonu
+// ---------------------------------------------
 const handleAuthStatus = (req, res) => {
   try {
-    if (req.isAuthenticated() && req.user) {
+    // Eğer oturum açıksa kullanıcı bilgilerini dön, değilse varsayılan anonim yapıyı dön
+    if (req.isAuthenticated && req.isAuthenticated() && req.user) {
       res.json({
         authenticated: true,
         user: {
-          id: req.user.id || req.user._id || '',
-          displayName: req.user.displayName || '',
+          id: req.user.id || req.user._id || 'user',
+          displayName: req.user.displayName || 'Kullanıcı',
           email: req.user.email || '',
           photo: req.user.photo || ''
         }
       });
     } else {
-      res.json({ authenticated: false });
+      res.json({
+        authenticated: false,
+        user: null
+      });
     }
   } catch (error) {
-    console.error('Kullanıcı bilgisi hatası:', error);
-    res.json({ authenticated: false });
+    console.error('Kullanıcı bilgisi kontrol hatası:', error);
+    res.json({ authenticated: false, user: null });
   }
 };
 
-// ÇAKIŞMA ÖNLEMİ: Frontend hem /status hem de /user çağırsa bile ikisi de çalışacak!
+// ---------------------------------------------
+// Frontend API Endpoint'leri
+// ---------------------------------------------
 router.get('/status', handleAuthStatus);
 router.get('/user', handleAuthStatus);
 
