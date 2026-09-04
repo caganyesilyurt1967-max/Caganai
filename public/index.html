@@ -111,23 +111,16 @@
             
             <!-- Sidebar Footer - Kullanıcı Bilgileri -->
             <div class="p-4 border-t border-dark-700">
-                <div id="userInfo" class="hidden">
+                <div id="userInfo">
                     <div class="flex items-center gap-3">
-                        <img id="userAvatar" src="" alt="" class="w-9 h-9 rounded-full border-2 border-primary-500">
-                        <div class="flex-1 min-w-0">
-                            <p id="userName" class="text-sm font-medium text-white truncate"></p>
-                            <p id="userEmail" class="text-xs text-dark-400 truncate"></p>
+                        <div class="w-9 h-9 rounded-full bg-primary-600 flex items-center justify-center text-white font-bold text-sm">
+                            ÇAI
                         </div>
-                        <button id="logoutBtn" class="text-dark-400 hover:text-red-400 transition-colors" title="Çıkış Yap">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </button>
+                        <div class="flex-1 min-w-0">
+                            <p id="userName" class="text-sm font-medium text-white truncate">Kullanıcı</p>
+                            <p id="userEmail" class="text-xs text-dark-400 truncate">Aktif Oturum</p>
+                        </div>
                     </div>
-                </div>
-                <div id="loginPrompt">
-                    <button id="loginBtn" class="w-full py-2 px-4 bg-white hover:bg-gray-100 text-dark-900 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2">
-                        <i class="fab fa-google"></i>
-                        <span data-lang="google_login">Google ile Giriş Yap</span>
-                    </button>
                 </div>
             </div>
             
@@ -193,26 +186,9 @@
             </div>
             
             <!-- ============================================ -->
-            <!-- GİRİŞ EKRANI -->
-            <!-- ============================================ -->
-            <div id="loginScreen" class="hidden flex-1 flex items-center justify-center">
-                <div class="text-center max-w-md mx-auto px-6">
-                    <div class="w-24 h-24 bg-gradient-to-br from-primary-500 to-purple-600 rounded-3xl flex items-center justify-center mb-8 shadow-lg shadow-primary-500/30 mx-auto">
-                        <i class="fas fa-brain text-white text-4xl"></i>
-                    </div>
-                    <h1 class="text-3xl font-bold text-white mb-3">Çağan AI</h1>
-                    <p class="text-dark-400 mb-8 text-lg">Devam etmek için giriş yapın</p>
-                    <button id="loginBtnCenter" class="px-8 py-3 bg-white hover:bg-gray-100 text-dark-900 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-3 mx-auto shadow-lg">
-                        <i class="fab fa-google text-lg"></i>
-                        <span data-lang="google_login">Google ile Giriş Yap</span>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- ============================================ -->
             <!-- SOHBET ALANI -->
             <!-- ============================================ -->
-            <main id="chatArea" class="hidden flex-1 overflow-y-auto px-4 py-6 space-y-4">
+            <main id="chatArea" class="flex-1 overflow-y-auto px-4 py-6 space-y-4">
                 <!-- Hoş Geldiniz Ekranı -->
                 <div id="welcomeScreen" class="flex flex-col items-center justify-center h-full text-center">
                     <div class="w-20 h-20 bg-gradient-to-br from-primary-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-primary-500/20">
@@ -266,7 +242,7 @@
             <!-- ============================================ -->
             <!-- MESAJ YAZMA ALANI -->
             <!-- ============================================ -->
-            <div id="inputArea" class="hidden border-t border-dark-700 bg-dark-900/80 backdrop-blur-sm px-4 py-3 flex-shrink-0">
+            <div id="inputArea" class="border-t border-dark-700 bg-dark-900/80 backdrop-blur-sm px-4 py-3 flex-shrink-0">
                 <!-- Mesaj Girişi -->
                 <div id="messageInputRow" class="flex items-end gap-2 bg-dark-800 rounded-xl px-3 py-2 border border-dark-600 focus-within:border-primary-500 transition-all">
                     <!-- Metin Alanı -->
@@ -301,3 +277,4 @@
     <script src="/js/app.js"></script>
 </body>
 </html>
+
